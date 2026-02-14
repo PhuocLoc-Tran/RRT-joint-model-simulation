@@ -24,9 +24,7 @@ The scripts reproduce the simulation studies and empirical analyses reported in 
 
 The simulation experiments evaluate the finite-sample performance of the proposed joint likelihood framework for modeling:
 
-\[
-P(Y, Z \mid \boldsymbol{X}) = P(Y \mid \boldsymbol{X}) P(Z \mid Y, \boldsymbol{X})
-\]
+$$ P(Y, Z \mid \boldsymbol{X}) = P(Y \mid \boldsymbol{X}) P(Z \mid Y, \boldsymbol{X}).$$
 
 where:
 
@@ -50,24 +48,24 @@ All simulation designs correspond exactly to Section 4 of the manuscript.
 
 Each script implements Monte Carlo experiments under the following settings:
 
-* Sample size: \(n \in {1000, 2000}\)
-* RRT design parameters: \(p \in {0.5, 0.7}\), \(c \in {0.25, 0.5}\)
+* Sample size: $n \in \{1000, 2000\}$
+* RRT design parameters: $p \in \{0.5, 0.7\},\ c \in \{0.25, 0.5\}$
 * Number of replications: 1000 (default).
 
 ## Case 1
 
-* (X_1): continuous
-* (X_2): ordinal
+* $X_1$: continuous
+* $X_2$: ordinal
 
 ## Case 2
 
-* (X_1): binary
-* (X_2): ordinal
+* $X_1$: binary
+* $X_2$: ordinal
 
 ## Case 3
 
-* (X_1): binary
-* (X_2): binary
+* $X_1$: binary
+* $X_2$: binary
 
 The true parameter values used in each scenario match those reported in the manuscript tables.
 
@@ -78,26 +76,22 @@ The true parameter values used in each scenario match those reported in the manu
 Each simulation script follows the same workflow:
 
 1. **Generate covariates**
-   Simulate \(X_1\), \(X_2\) according to the specified case.
+   Simulate $X_1$, $X_2$ according to the specified case.
 
-2. **Generate latent sensitive variable \(Y\)**
+2. **Generate latent sensitive variable $Y$**
    Using logistic model:
-   \[
-   P(Y=1|\boldsymbol{X}) = H(\boldsymbol{\beta}^\top \boldsymbol{X})
-   \]
+   $$ P(Y=1|\boldsymbol{X}) = H(\boldsymbol{\beta}^\top \boldsymbol{X}).$$
 
-3. **Generate observed response \(Z\)**
+3. **Generate observed response $Z$**
    Using conditional model:
-   \[
-   P(Z=1|Y=y,\boldsymbol{X}) = H(\boldsymbol{\alpha}_y^\top \boldsymbol{X})
-   \]
+   $$P(Z=1|Y=y,\boldsymbol{X}) = H(\boldsymbol{\alpha}_y^\top \boldsymbol{X}).$$
 
 4. **Apply unrelated-question RRT mechanism**
-   Generate randomized response \(Y^*\).
+   Generate randomized response $Y^*$.
 
 5. **Estimate parameters using EM algorithm**
 
-   * E-step: compute posterior expectations of \(Y\)
+   * E-step: compute posterior expectations of $Y$.
    * M-step: update logistic regression parameters.
 
 6. **Compute performance metrics**
@@ -154,8 +148,8 @@ However, researchers may apply for access through the Survey Research Data Archi
 
 The analysis scripts included here:
 
-* Define the binary variables \(Y\), \(Z\)
-* Specify covariates \(X_1\), \(X_2\)
+* Define the binary variables $Y$, $Z$
+* Specify covariates $X_1$, $X_2$.
 * Fit the joint model
 * Compute parameter estimates and LRT statistics.
 
