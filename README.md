@@ -24,7 +24,7 @@ The scripts reproduce the simulation studies and empirical analyses reported in 
 
 The simulation experiments evaluate the finite-sample performance of the proposed joint likelihood framework for modeling:
 
-$$ P(Y, Z \mid \boldsymbol{X}) = P(Y \mid \boldsymbol{X}) P(Z \mid Y, \boldsymbol{X}).$$
+$$P(Y, Z \mid \boldsymbol{X}) = P(Y \mid \boldsymbol{X}) P(Z \mid Y, \boldsymbol{X}).$$
 
 where:
 
@@ -48,8 +48,8 @@ All simulation designs correspond exactly to Section 4 of the manuscript.
 
 Each script implements Monte Carlo experiments under the following settings:
 
-* Sample size: $n \in \{1000, 2000\}$
-* RRT design parameters: $p \in \{0.5, 0.7\},\ c \in \{0.25, 0.5\}$
+* Sample size: $n \in {1000, 2000}$
+* RRT design parameters: $p \in {0.5, 0.7},\ c \in {0.25, 0.5}$
 * Number of replications: 1000 (default).
 
 ## Case 1
