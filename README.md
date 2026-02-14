@@ -16,7 +16,7 @@ The scripts reproduce the simulation studies and empirical analyses reported in 
 | ------------------------------------------- | -------------------------------------------------------------------------- |
 | `Supplement_Simulation_Study_01-02.R`       | Simulation code for Case 1 and Case 2 (Section 4 of the paper)             |
 | `Supplement_Simulation_Study_03.R`          | Simulation code for Case 3 (Section 4 of the paper)                        |
-| `Empirical_Analysis_TSCS.R` *(if included)* | Analysis code for the 2012 Taiwan Social Change Survey example (Section 5) |
+| `Empirical_Analysis_TSCS.R`                 | Analysis code for the 2012 Taiwan Social Change Survey example (Section 5) |
 
 ---
 
