@@ -1,6 +1,66 @@
+############################################################
+# Simulation Script for Conditional distributional framework 
+# for joint modeling of sensitive attribute and an observed Variable 
+# under randomized response designs
+#
+# This script reproduces one simulation setting from Section 4 
+# of the manuscript:
+#
+#   P(Y, Z | X) = P(Y | X) P(Z | Y, X)
+#
+# where:
+#   Y  = latent sensitive binary variable (collected under RRT)
+#   Z  = observed binary response variable
+#   X  = covariates (X1, X2)
+#
+# The model components are:
+#   P(Y=1 | X)         = H(beta^T X)
+#   P(Z=1 | Y=y, X)    = H(alpha_y^T X)
+#
+# with H(t) = 1 / (1 + exp(-t)) (logistic link).
+#
+# The simulation evaluates:
+#   - Bias of EM estimator
+#   - Empirical SD
+#   - Average asymptotic standard error (ASE)
+#   - Coverage probability (95% Wald CI)
+#   - Likelihood ratio test performance for H0: alpha0 = alpha1
+#
+# ----------------------------------------------------------
+# STRUCTURE OF THIS SCRIPT
+#
+# 1. Data generation under Greenberg RRT mechanism
+# 2. EM algorithm implementation for parameter estimation
+# 3. Observed information matrix via numerical derivatives
+# 4. Monte Carlo loop (KT = 1000 replications)
+# 5. Summary of simulation results
+#
+# Each function is documented below.
+############################################################
+
 require(stats)
 library(xtable)
 set.seed(12345)
+
+############################################################
+# Greenberg.RR.data
+#
+# Generates simulated data under the unrelated-question RRT.
+#
+# Inputs:
+#   nn       = sample size
+#   pp       = probability of answering sensitive question
+#   cc       = probability of forced "Yes" in RRT
+#   beta.1   = true beta parameters
+#   alpha.00 = true alpha parameters (alpha0 and alpha1 stacked)
+#
+# Output:
+#   Matrix containing:
+#     Y1   = true latent sensitive variable
+#     Y1.0 = observed randomized response
+#     ZZ   = observed binary response Z
+#     chi.1= design matrix (1, X1, X2)
+############################################################
 
 Greenberg.RR.data = function(nn,pp,cc,beta.1, alpha.00)
 {
@@ -38,6 +98,16 @@ Greenberg.RR.data = function(nn,pp,cc,beta.1, alpha.00)
 
 
 ###Conditional Expectation of Y[i] given Y0[i] and ZZ[i] and X
+############################################################
+# CEY
+#
+# E-step of EM algorithm:
+# Computes E(Y | Y*, Z, X; Theta_hat)
+#
+# This corresponds to the conditional expectation formula 
+# derived from the joint likelihood under the RRT mechanism.
+############################################################
+
 CEY = function(Y1.0,ZZ,chi.1,pp,cc, Theta.hat)
 {
   KK = ncol(chi.1)
@@ -103,7 +173,26 @@ Greenberg.and.Z.reg10 = function(pp,cc,alpha.0,E.Y,ZZ,chi.1)
   return(-log.like.GZ0)
 }
 
+############################################################
+# EM.alogoritmH1
 #
+# Implements EM algorithm for the full joint model (H1).
+#
+# Steps:
+#   - E-step: compute conditional expectation of Y
+#   - M-step: maximize Q-function separately for:
+#       beta (model for Y)
+#       alpha0 (model for Z | Y=0)
+#       alpha1 (model for Z | Y=1)
+#
+# Convergence criteria:
+#   Relative change in parameters < 1e-5
+#   Maximum 100 iterations
+#
+# Returns:
+#   Estimated parameters, convergence error, convergence index
+############################################################
+
 EM.alogoritmH1 = function(Y1.0,ZZ,chi.1,pp,cc,Theta.hat)
 {
   KK = ncol(chi.1)
@@ -160,6 +249,17 @@ CP.95 = function(est1,est.se,Theta.t)
 }
 
 ## Orginal Log likelihood for (Y1.0,ZZ)
+############################################################
+# Log.like.GRY0Z
+#
+# Computes the observed log-likelihood for (Y*, Z)
+# under the full joint model.
+#
+# Used for:
+#   - Likelihood ratio test
+#   - Numerical differentiation for ASE computation
+############################################################
+
 Log.like.GRY0Z = function(pp,cc,Y1.0,ZZ,chi.1,Theta.1)
 {
   KK = ncol(chi.1)
@@ -186,6 +286,17 @@ Log.like.GRY0Z = function(pp,cc,Y1.0,ZZ,chi.1,Theta.1)
 }
 
 # Partial derivative of Q in Theta.hat part, to let Q function be a vectors
+############################################################
+# Numerical derivatives of the log-likelihood
+#
+# Df1 = gradient
+# Df2 = Hessian (observed information matrix)
+#
+# These are used to compute asymptotic standard errors:
+#   Var(Theta_hat) ≈ (-Hessian)^(-1)
+############################################################
+
+
 Df1.LogLike.Y0Z = function(pp,cc,Y1.0,ZZ,chi.1, Theta.hat)
 {
   delta = 0.00005
@@ -297,6 +408,20 @@ jj  = 0
 KTR = 1000+300
 KTR.0 = 0
 
+############################################################
+# MONTE CARLO SIMULATION
+#
+# KT = number of successful converged replications (default 1000)
+#
+# For each replication:
+#   1. Generate data under true parameters
+#   2. Estimate full model via EM
+#   3. Compute asymptotic SE
+#   4. Fit restricted model (H0: alpha0 = alpha1)
+#   5. Compute LRT statistic
+#
+# Only replications with successful convergence are stored.
+############################################################
 
 while(jj<=999 & KTR.0<KTR)
 {
@@ -346,6 +471,23 @@ while(jj<=999 & KTR.0<KTR)
   cat("jj=",jj," ","convergence index", Est.Theta.all[3*KK+2]," ")
 }
 
+############################################################
+# OUTPUT SUMMARY
+#
+# output.1:
+#   True parameter
+#   Monte Carlo mean of EM estimator
+#   Empirical SD
+#   Average asymptotic SE (ASE)
+#   95% coverage probability
+#
+# output.2:
+#   Results under null model H0
+#
+# LRT rejection rate:
+#   Empirical power (or Type I error if H0 true)
+############################################################
+
 
 est1.cp = CP.95(est1,est.se,Theta.t)
 
@@ -363,4 +505,5 @@ rownames(output.2) = c("beta_0","beta_1","beta_2","alpha0_0","alpha0_1","alpha0_
 output.2
 length(LR.test[LR.test[,2]<=0.05,2])/1000  
 pp; cc; nn
+
 
