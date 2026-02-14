@@ -80,7 +80,7 @@ Each simulation script follows the same workflow:
 
 2. **Generate latent sensitive variable $Y$**
    Using logistic model:
-   $$ P(Y=1|\boldsymbol{X}) = H(\boldsymbol{\beta}^\top \boldsymbol{X}).$$
+   $$P(Y=1|\boldsymbol{X}) = H(\boldsymbol{\beta}^\top \boldsymbol{X}).$$
 
 3. **Generate observed response $Z$**
    Using conditional model:
