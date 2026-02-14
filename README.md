@@ -88,9 +88,9 @@ Each simulation script follows the same workflow:
 
 3. **Generate observed response \(Z\)**
    Using conditional model:
-   [
+   \[
    P(Z=1|Y=y,\boldsymbol{X}) = H(\boldsymbol{\alpha}_y^\top \boldsymbol{X})
-   ]
+   \]
 
 4. **Apply unrelated-question RRT mechanism**
    Generate randomized response \(Y^*\).
