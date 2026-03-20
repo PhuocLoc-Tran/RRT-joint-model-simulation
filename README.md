@@ -1,8 +1,8 @@
-# 📘 Conditional distributional framework for joint modeling of sensitive attribute and an observed Variable under randomized response designs
+# 📘 Conditional distributional framework for joint modeling of a sensitive attribute and an observed Variable under randomized response designs
 
 This repository contains the simulation and empirical analysis scripts accompanying the paper:
 
-**“Conditional distributional framework for joint modeling of sensitive attribute and an observed Variable under randomized response designs”**
+**“Conditional distributional framework for joint modeling of a sensitive attribute and an observed Variable under randomized response designs”**
 Shen-Ming Lee, Phuoc Loc Tran, Truong-Nhat Le, and Chin-Shang Li
 (JRSSC revision)
 
@@ -141,10 +141,7 @@ The reported values correspond to the simulation tables and figures in the manus
 
 # 📈 Empirical Example (Section 5)
 
-The empirical analysis is based on the 2012 Taiwan Social Change Survey (TSCS).
-
-Due to data governance policies, the raw data cannot be redistributed in this repository.
-However, researchers may apply for access through the Survey Research Data Archive (SRDA), Academia Sinica.
+The empirical analysis is based on the 2012 Taiwan Social Change Survey (TSCS). This survey was conducted through face-to-face interviews by the Center for Survey Research at Academia Sinica, focusing on individuals aged 18 years or older in Taiwan and investigating the prevalence of extramarital affairs. The data are available at https://doi.org/10.6141/TW-SRDA-C00223_2-1 (Chang, 2016). The data set consisted of 1, 838 participants: 945 males and 893 females.
 
 The analysis scripts included here:
 
