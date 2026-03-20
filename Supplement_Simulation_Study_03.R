@@ -1,7 +1,7 @@
 ############################################################
 # Simulation Script (Case 3 / Binary X1, X2): 
 # Conditional distributional framework for joint modeling of 
-# sensitive attribute and an observed Variable under randomized response designs
+# a sensitive attribute and an observed Variable under randomized response designs
 #
 # This script reproduces a simulation setting in Section 4 
 # and the comparison with the Greenberg-only model reported 
