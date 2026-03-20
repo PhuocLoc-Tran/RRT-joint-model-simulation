@@ -1,6 +1,6 @@
 ############################################################
 # Simulation Script for Conditional distributional framework 
-# for joint modeling of sensitive attribute and an observed Variable 
+# for joint modeling of a sensitive attribute and an observed Variable 
 # under randomized response designs
 #
 # This script reproduces one simulation setting from Section 4 
