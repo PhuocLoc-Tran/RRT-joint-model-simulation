@@ -1,7 +1,7 @@
 ############################################################
 # Empirical Example Script (TSCS 2012) 
 # Conditional distributional framework for joint modeling of 
-# sensitive attribute and an observed Variable under randomized response designs.
+# a sensitive attribute and an observed Variable under randomized response designs.
 #
 # This script accompanies the manuscript:
 # Conditional distributional framework for joint modeling of 
